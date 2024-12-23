@@ -14,12 +14,12 @@ export const authOptions = {
         username: {
           label: "Username",
           type: "text",
-          placeholder: "username",
+          placeholder: "username: shark",
         },
         password: {
           label: "Password",
           type: "password",
-          placeholder: "password",
+          placeholder: "password: shark",
         },
       },
       async authorize(credentials) {
