@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
 import { useState, useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
+import useLocalStorageState from "use-local-storage-state";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -10,6 +11,9 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState("darkMode", {
+    defaultValue: false,
+  });
   const { data: plants, mutate: mutatePlants } = useSWR("/api/plants", fetcher);
   const { data: reminders, mutate: mutateReminders } = useSWR(
     "/api/reminders",
@@ -51,6 +55,10 @@ export default function App({
 
     navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
   }, []);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   async function toggleFavourite(id, isFavourite) {
     mutatePlants(
@@ -125,7 +133,10 @@ export default function App({
             reminders={reminders}
             onEditReminder={handleEditReminder}
           >
-            <GlobalStyle />
+            <GlobalStyle darkMode={isDarkMode} />
+            <button onClick={toggleDarkMode}>
+              {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            </button>
             <Component
               {...pageProps}
               plants={plants}

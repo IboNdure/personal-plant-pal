@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
 :root {
+
+  --color-button-text-light: #2e4d36;  /* Textfarbe im Lightmode */
+  --color-button-text-dark: #ffffff;  /* Textfarbe im Darkmode */
+
   --color-background: #f0f5f1; 
   --color-text-primary: #2e4d36; 
 
@@ -60,8 +64,10 @@ export default createGlobalStyle`
   body {
     margin: 0;
     font-family: system-ui;
-    background-color: var(--color-background);
-    color: var(--color-text-primary);
+    background-color: ${(props) => (props.darkMode ? "#121212" : "#fff")};
+    color: ${(props) => (props.darkMode ? "#fff" : "#000")};
+    transition: background-color 0.3s ease, color 0.3s ease;
+
   }
 
 
@@ -70,17 +76,21 @@ export default createGlobalStyle`
     font-family: "Nunito", sans-serif;
   }
 
-  button {
-    font-size: 1rem;        
-    color: var(--color-button-text);
-    background-color: transparent;
-    border: 1px solid transparent; 
-    border-radius: var(--border-radius);          
-    padding: 10px 15px;           
-    cursor: pointer;             
-    transition: background-color 0.3s ease; 
-    font-family: "Junge", sans-serif;
-  }
+ button {
+  font-size: 1rem;
+  color: ${(props) =>
+    props.darkMode
+      ? "var(--color-button-text-dark)"
+      : "var(--color-button-text-light)"};
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Junge", sans-serif;
+}
+
 
   article {
     background-color: var(--color-background-cards); 

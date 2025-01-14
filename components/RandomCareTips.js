@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { caretips } from "@/assets/caretips";
 import Typewriter from "typewriter-effect";
 
-export default function RandomCareTips() {
+export default function RandomCareTips({ darkMode }) {
   const [randomTip, setRandomTip] = useState("");
 
   function getRandomTip() {
@@ -23,8 +23,8 @@ export default function RandomCareTips() {
 
   return (
     <Caretipcard>
-      <TipContainer>
-        <Title>Your Plant Tip of the Day</Title>
+      <TipContainer darkMode={darkMode}>
+        <Title darkMode={darkMode}>Your Plant Tip of the Day</Title>
         {randomTip && (
           <Typewriter
             key={randomTip}
@@ -56,6 +56,10 @@ const TipContainer = styled.section`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  color: ${(props) =>
+    props.darkMode
+      ? "#ffffff"
+      : "#2e4d36"}; /* Weiß im Darkmode und Dunkelgrün im Lightmode */
 `;
 
 const Title = styled.h2`
@@ -63,4 +67,8 @@ const Title = styled.h2`
   padding: 20px;
   text-align: center;
   position: relative;
+  color: ${(props) =>
+    props.darkMode
+      ? "#ffffff"
+      : "#2e4d36"}; /* Weiß im Darkmode und Dunkelgrün im Lightmode */
 `;
